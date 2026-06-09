@@ -16,12 +16,12 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-webapp-tf"
-  location = "West Europe"
+  name     = var.resource_group_name
+  location = var.location
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "web-vnet"
+  name                = var.vnet_name
   address_space = ["192.168.0.0/22"]
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -96,7 +96,7 @@ resource "azurerm_network_interface_security_group_association" "nsg_assoc" {
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
-  name                = "websrv01-tf"
+  name                = var.vm_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
